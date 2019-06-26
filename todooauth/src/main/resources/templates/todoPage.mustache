@@ -1,0 +1,40 @@
+{{>header}}
+
+<h1>Todo View</h1>
+
+{{#todo}}
+    <table style="margin-bottom:2em">
+        <tr>
+            <th>id</th>
+            <td>{{id}}</td>
+        </tr>
+        <tr>
+            <th>description</th>
+            <td>{{description}}</td>
+        </tr>
+        <tr>
+            <th>created</th>
+            <td>{{created}}</td>
+        </tr>
+        <tr>
+            <th>modified</th>
+            <td>{{modified}}</td>
+        </tr>
+        <tr>
+            <th>completed</th>
+            <td>{{completed}}</td>
+        </tr>
+    </table>
+
+    <script type="text/javascript">
+        function onDelete() {
+            fetch(location.href, {
+                method: 'DELETE'
+            })
+            .then(() => location.href= '/todo');
+        }
+    </script>
+    <input type="button" value="Delete Todo" onclick="onDelete()"/>
+{{/todo}}
+
+{{>footer}}

@@ -1,0 +1,26 @@
+<script type="text/javascript">
+    function onTodoCreated() {
+        let todo = {
+            description: (document.getElementById('description').value || '').trim(),
+            completed: document.getElementById('completed').checked
+        };
+        let url = location.href;
+
+        fetch(url, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(todo)
+        })
+        .then(() => location.href = location.href);
+    }
+</script>
+
+<div>
+    <label>Description: </label>
+    <input id="description" type="text" />
+
+    <label>Completed: </label>
+    <input id="completed" type="checkbox" />
+
+    <button onclick="onTodoCreated()">Submit</button>
+</div>

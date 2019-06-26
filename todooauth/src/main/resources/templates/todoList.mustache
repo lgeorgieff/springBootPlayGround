@@ -1,0 +1,32 @@
+<h1>Todo List</h1>
+
+<script type="text/javascript">
+    function onCompletedChanged(sender) {
+        let url = `${location.origin}/todo/${sender.value}`
+        let completed = sender.checked;
+
+        fetch(url, {
+            method: 'PATCH',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(completed)
+        });
+    }
+</script>
+
+<ul>
+    {{#todos}}
+        <div>
+            <li>
+                <input onclick="onCompletedChanged(this)"
+                       style="margin-left:1em" type="checkbox"
+                       value="{{id}}"
+                       {{#completed}}checked="checked"{{/completed}}/>
+                <a href="/todo/{{id}}">{{description}}</a>
+            </li>
+        </div>
+    {{/todos}}
+
+    {{^todos}}
+        <div>No Todos</div>
+    {{/todos}}
+</ul>
