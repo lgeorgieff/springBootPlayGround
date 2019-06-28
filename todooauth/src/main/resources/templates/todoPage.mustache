@@ -26,21 +26,6 @@
         </tr>
     </table>
 
-    <script type="text/javascript">
-        function onDelete() {
-            fetch(location.href, {
-                method: 'DELETE'
-            })
-            .then((response) => {
-                if(response.status !== 200) {
-                    return response.text().then((text) => alert(`Failed to delete Todo: ${text}`));
-                }
-            })
-            .then(() => location.href = '/todo')
-            .catch((err) => alert(`Failed to delete Todo: ${err}`));
-        }
-    </script>
-
     <hr />
 
     <input type="button" value="Delete Todo" onclick="onDelete()"/>

@@ -1,27 +1,3 @@
-<script type="text/javascript">
-    function onTodoCreated() {
-        let todo = {
-            description: (document.getElementById('description').value || '').trim(),
-            completed: document.getElementById('completed').checked
-        };
-        let url = location.href;
-
-        fetch(url, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            credentials: 'same-origin',
-            body: JSON.stringify(todo)
-        })
-        .then((response) => {
-            if(response.status !== 201) {
-                return response.text().then((text) => alert(`Failed to create Todo: ${text}`));
-            }
-        })
-        .then(() => location.href = location.href)
-        .catch((err) => alert(`Failed to create Todo: ${err}`));
-    }
-</script>
-
 <div id="createTodo">
     <div>
         <label>Description: </label>
