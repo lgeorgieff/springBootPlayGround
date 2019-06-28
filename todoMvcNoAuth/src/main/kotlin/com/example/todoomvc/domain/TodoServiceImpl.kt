@@ -1,6 +1,6 @@
-package com.example.todooauth.domain
+package com.example.todoomvc.domain
 
-import com.example.todooauth.persistency.TodoRepository
+import com.example.todoomvc.persistency.TodoRepository
 import org.springframework.stereotype.Service
 import java.time.LocalDateTime
 

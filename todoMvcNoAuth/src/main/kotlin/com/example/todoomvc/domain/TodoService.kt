@@ -1,4 +1,4 @@
-package com.example.todooauth.domain
+package com.example.todoomvc.domain
 
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono

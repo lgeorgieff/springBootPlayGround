@@ -1,7 +1,7 @@
-package com.example.todooauth
+package com.example.todoomvc
 
-import com.example.todooauth.domain.Todo
-import com.example.todooauth.domain.TodoService
+import com.example.todoomvc.domain.Todo
+import com.example.todoomvc.domain.TodoService
 import org.springframework.boot.CommandLineRunner
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication

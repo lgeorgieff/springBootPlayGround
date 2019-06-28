@@ -1,4 +1,4 @@
-package com.example.todooauth
+package com.example.todoomvc
 
 import org.junit.Test
 import org.junit.runner.RunWith

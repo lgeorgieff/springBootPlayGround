@@ -1,4 +1,4 @@
-package com.example.todooauth.domain
+package com.example.todoomvc.domain
 
 import org.bson.types.ObjectId
 import org.springframework.data.annotation.Id

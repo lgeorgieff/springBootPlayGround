@@ -1,7 +1,7 @@
-package com.example.todooauth.controller
+package com.example.todoomvc.controller
 
-import com.example.todooauth.domain.Todo
-import com.example.todooauth.domain.TodoService
+import com.example.todoomvc.domain.Todo
+import com.example.todoomvc.domain.TodoService
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.http.server.reactive.ServerHttpRequest
