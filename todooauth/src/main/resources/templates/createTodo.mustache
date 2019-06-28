@@ -8,19 +8,30 @@
 
         fetch(url, {
             method: 'POST',
-            headers: {'Content-Type': 'application/json'},
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'same-origin',
             body: JSON.stringify(todo)
         })
-        .then(() => location.href = location.href);
+        .then((response) => {
+            if(response.status !== 201) {
+                return response.text().then((text) => alert(`Failed to create Todo: ${text}`));
+            }
+        })
+        .then(() => location.href = location.href)
+        .catch((err) => alert(`Failed to create Todo: ${err}`));
     }
 </script>
 
-<div>
-    <label>Description: </label>
-    <input id="description" type="text" />
+<div id="createTodo">
+    <div>
+        <label>Description: </label>
+        <input id="description" type="text" />
+    </div>
 
-    <label>Completed: </label>
-    <input id="completed" type="checkbox" />
+    <div>
+        <label>Completed: </label>
+        <input id="completed" type="checkbox" />
+    </div>
 
     <button onclick="onTodoCreated()">Submit</button>
 </div>

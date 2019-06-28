@@ -3,7 +3,7 @@
 <h1>Todo View</h1>
 
 {{#todo}}
-    <table style="margin-bottom:2em">
+    <table>
         <tr>
             <th>id</th>
             <td>{{id}}</td>
@@ -31,9 +31,18 @@
             fetch(location.href, {
                 method: 'DELETE'
             })
-            .then(() => location.href= '/todo');
+            .then((response) => {
+                if(response.status !== 200) {
+                    return response.text().then((text) => alert(`Failed to delete Todo: ${text}`));
+                }
+            })
+            .then(() => location.href = '/todo')
+            .catch((err) => alert(`Failed to delete Todo: ${err}`));
         }
     </script>
+
+    <hr />
+
     <input type="button" value="Delete Todo" onclick="onDelete()"/>
 {{/todo}}
 
