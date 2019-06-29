@@ -10,7 +10,7 @@ import reactor.core.publisher.Flux
 import reactor.core.publisher.toMono
 
 @SpringBootApplication
-class TodooauthApplication(private val todoService: TodoService) {
+class TodoApplication(private val todoService: TodoService) {
 	@Bean
 	fun process() = CommandLineRunner {
 		Flux.just(
@@ -26,5 +26,5 @@ class TodooauthApplication(private val todoService: TodoService) {
 }
 
 fun main(args: Array<String>) {
-	runApplication<TodooauthApplication>(*args)
+	runApplication<TodoApplication>(*args)
 }
