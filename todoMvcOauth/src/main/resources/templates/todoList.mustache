@@ -1,0 +1,13 @@
+<h1>Todo List</h1>
+
+<ul class="listing">
+    {{#todos}}
+        <li>
+            <input onclick="onCompletedChanged(this)"
+                   type="checkbox"
+                   value="{{id}}"
+                   {{#completed}}checked="checked"{{/completed}}/>
+            <a href="/todo/{{id}}">{{description}}</a>
+        </li>
+    {{/todos}}
+</ul>
