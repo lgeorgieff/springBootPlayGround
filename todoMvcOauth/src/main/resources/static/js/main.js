@@ -40,5 +40,11 @@ function onCompletedChanged(sender) {
         method: 'PATCH',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(completed)
-    });
+    })
+    .then((response) => {
+        if(response.status !== 200) {
+            return response.text().then((text) => alert(`Failed to complete Todo: ${text}`));
+        }
+    })
+    .catch((err) => alert(`Failed to complete Todo: ${err}`));
 }
