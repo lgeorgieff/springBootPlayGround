@@ -13,6 +13,9 @@ import org.springframework.security.oauth2.core.user.OAuth2User
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.*
+import org.springframework.web.reactive.function.client.ClientRequest
+import org.springframework.web.reactive.function.client.ExchangeFilterFunction
+import org.springframework.web.reactive.function.client.WebClient
 import org.springframework.web.util.UriComponentsBuilder
 import reactor.core.publisher.Mono
 import reactor.core.publisher.toMono
@@ -44,16 +47,45 @@ class TodoController(private val todoService: TodoService) {
             .flatMap {
                 println(">>> oauth2User.attributes ${it.attributes}")
                 println(">>> oauth2User.authorities ${it.authorities}")
-                println(">>> authorizedClient.accessToken ${authorizedClient.accessToken}")
-                println(">>> authorizedClient.refreshToken ${authorizedClient.refreshToken}")
-                println(">>> authorizedClient.principalName ${authorizedClient.principalName}")
-                println(">>> authorizedClient.clientRegistration.clientName: ${authorizedClient.clientRegistration.clientName}")
-                println(">>> authorizedClient.clientRegistration.clientId: ${authorizedClient.clientRegistration.clientId}")
-                println(">>> authorizedClient.clientRegistration.clientSecret: ${authorizedClient.clientRegistration.clientSecret}")
+
+                authorizedClient.apply {
+                    println(">>> authorizedClient.accessToken $accessToken")
+                    println(">>> authorizedClient.refreshToken $refreshToken")
+                    println(">>> authorizedClient.principalName $principalName")
+                    println(">>> authorizedClient.clientRegistration.clientName: ${clientRegistration.clientName}")
+                    println(">>> authorizedClient.clientRegistration.clientId: ${clientRegistration.clientId}")
+                    println(">>> authorizedClient.clientRegistration.clientSecret: ${clientRegistration.clientSecret}")
+                    println(">>> authorizedClient.clientRegistration.providerDetails.userInfoEndpoint.uri: " +
+                            clientRegistration.providerDetails.userInfoEndpoint.uri)
+                }
 
                 println(">>> principal.name: ${principal.name}")
 
-                Mono.empty<Void>()
+                val userInfoEndpointUri = authorizedClient.clientRegistration.providerDetails.userInfoEndpoint.uri
+                if (userInfoEndpointUri.isNotEmpty()) {
+                    val auth2Credentials = ExchangeFilterFunction.ofRequestProcessor { clientRequest ->
+                        ClientRequest.from(clientRequest)
+                                .header(HttpHeaders.AUTHORIZATION,
+                                        "Bearer " + authorizedClient.accessToken.tokenValue)
+                                .build()
+                                .toMono()
+                    }
+
+                    WebClient
+                            .builder()
+                            .filter(auth2Credentials)
+                            .build()
+                            .get()
+                            .uri(userInfoEndpointUri)
+                            .retrieve()
+                            .bodyToMono(Map::class.java)
+                            .flatMap { userInfo ->
+                                println(">>> UserInfoEndpoint: $userInfo")
+                                Mono.empty<Void>()
+                            }
+                } else {
+                    Mono.empty<Void>()
+                }
             }
             .thenMany(todoService.findAll())
             .buffer()
