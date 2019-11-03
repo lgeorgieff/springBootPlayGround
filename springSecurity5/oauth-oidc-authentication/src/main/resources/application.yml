@@ -1,0 +1,21 @@
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: <CLIENT ID>
+            client-secret: <CLIENT SECRET>
+          github:
+            client-id: <CLIENT ID>
+            client-secret: <CLIENT SECRET>
+
+server:
+  port: ${PORT:8443}
+  ssl:
+    key-store: classpath:prefix-service.jks
+    key-store-password: 123456
+    key-alias: prefix-service
+    trust-store: classpath:prefix-service.jks
+    trust-store-password: 123456
+    enabled: true
