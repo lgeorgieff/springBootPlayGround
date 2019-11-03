@@ -7,5 +7,5 @@ import org.springframework.boot.runApplication
 class JettyMemBasicAuthenticationApplication
 
 fun main(args: Array<String>) {
-	runApplication<JettyMemBasicAuthenticationApplication>(*args)
+    runApplication<JettyMemBasicAuthenticationApplication>(*args)
 }
