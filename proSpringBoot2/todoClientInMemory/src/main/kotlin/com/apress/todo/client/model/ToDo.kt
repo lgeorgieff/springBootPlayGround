@@ -1,14 +1,15 @@
 package com.apress.todo.client.model
 
 import java.time.LocalDateTime
-import java.util.*
+import java.util.UUID
 
-data class ToDo (
-        val id: String,
-        val description: String,
-        val created: LocalDateTime,
-        val modified: LocalDateTime,
-        val completed: Boolean) {
+data class ToDo(
+    val id: String,
+    val description: String,
+    val created: LocalDateTime,
+    val modified: LocalDateTime,
+    val completed: Boolean
+) {
 
     companion object {
         fun create(description: String): ToDo {

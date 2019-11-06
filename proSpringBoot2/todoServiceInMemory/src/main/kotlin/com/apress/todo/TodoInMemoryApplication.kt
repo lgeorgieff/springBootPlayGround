@@ -7,5 +7,5 @@ import org.springframework.boot.runApplication
 class TodoInMemoryApplication
 
 fun main(args: Array<String>) {
-	runApplication<TodoInMemoryApplication>(*args)
+    runApplication<TodoInMemoryApplication>(*args)
 }

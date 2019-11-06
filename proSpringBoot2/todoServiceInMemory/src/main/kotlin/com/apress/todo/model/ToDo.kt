@@ -1,10 +1,15 @@
 package com.apress.todo.model
 
 import java.time.LocalDateTime
-import java.util.*
+import java.util.UUID
 
-class ToDo private constructor (id: String?, description: String, created: LocalDateTime?,
-                                modified: LocalDateTime?, completed: Boolean) {
+class ToDo private constructor (
+    id: String?,
+    description: String,
+    created: LocalDateTime?,
+    modified: LocalDateTime?,
+    completed: Boolean
+) {
     val id: String = id ?: UUID.randomUUID().toString()
     val description: String = description
     val created: LocalDateTime
@@ -12,11 +17,11 @@ class ToDo private constructor (id: String?, description: String, created: Local
     val completed: Boolean = completed
 
     init {
-        if(description.isNullOrBlank()) {
+        if (description.isNullOrBlank()) {
             throw IllegalArgumentException(
                     """description must not be null or blank, but is "$description"""")
         }
-        if(id.isNullOrBlank()) {
+        if (id.isNullOrBlank()) {
             throw IllegalArgumentException("""id must not be null or blank, but is "$id"""")
         }
 
@@ -25,11 +30,11 @@ class ToDo private constructor (id: String?, description: String, created: Local
         this.modified = modified ?: localDateTime
     }
 
-    constructor(description: String, id: String? = null)
-            :this(id, description, null, null, false)
+    constructor(description: String, id: String? = null) :
+            this(id, description, null, null, false)
 
-    constructor(todo: ToDo, completed: Boolean)
-            :this(todo.id, todo.description, todo.created, todo.modified, completed)
+    constructor(todo: ToDo, completed: Boolean) :
+            this(todo.id, todo.description, todo.created, todo.modified, completed)
 
     override fun toString() = """
         |{

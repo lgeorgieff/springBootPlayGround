@@ -1,6 +1,6 @@
 package com.apress.todo.model
 
-interface CommonRepository<T>{
+interface CommonRepository<T> {
     fun save(model: T): T
     fun save(models: List<T>): List<T>
     fun delete(model: T)

@@ -2,14 +2,21 @@ package com.apress.todo.controller
 
 import com.apress.todo.model.CommonRepository
 import com.apress.todo.model.ToDo
-import com.apress.todo.model.ToDoBuilder
 import com.apress.todo.validation.ToDoValidationError
 import com.apress.todo.validation.ValidationErrorBuilder
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.validation.Errors
-import org.springframework.web.bind.annotation.*
+import org.springframework.web.bind.annotation.DeleteMapping
+import org.springframework.web.bind.annotation.ExceptionHandler
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PatchMapping
+import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestMethod
+import org.springframework.web.bind.annotation.ResponseStatus
+import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder
 
 @RestController
@@ -22,7 +29,7 @@ class TodoController(private val repository: CommonRepository<ToDo>) {
     @GetMapping("/todo/{id}")
     fun getToDoById(@PathVariable id: String): ResponseEntity<ToDo> {
         val todo = repository.tryFindById(id)
-        return if(todo != null) ResponseEntity.ok(todo) else ResponseEntity.notFound().build()
+        return if (todo != null) ResponseEntity.ok(todo) else ResponseEntity.notFound().build()
     }
 
     @PatchMapping("/todo/{id}")
@@ -39,9 +46,9 @@ class TodoController(private val repository: CommonRepository<ToDo>) {
                 .build()
     }
 
-    @RequestMapping("/todo", method=[RequestMethod.POST, RequestMethod.PUT])
+    @RequestMapping("/todo", method = [RequestMethod.POST, RequestMethod.PUT])
     fun createToDo(@RequestBody todo: ToDo, errors: Errors): ResponseEntity<*> {
-        if(errors.hasErrors()) {
+        if (errors.hasErrors()) {
             return ResponseEntity
                     .badRequest()
                     .body(ValidationErrorBuilder.fromBindingErrors(errors))

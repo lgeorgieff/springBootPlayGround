@@ -2,6 +2,7 @@ package com.example.todoomvc.controller
 
 import com.example.todoomvc.domain.Todo
 import com.example.todoomvc.domain.TodoService
+import java.security.Principal
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.http.server.reactive.ServerHttpRequest
@@ -12,14 +13,20 @@ import org.springframework.security.oauth2.client.annotation.RegisteredOAuth2Aut
 import org.springframework.security.oauth2.core.user.OAuth2User
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
-import org.springframework.web.bind.annotation.*
+import org.springframework.web.bind.annotation.DeleteMapping
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PatchMapping
+import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.ResponseBody
 import org.springframework.web.reactive.function.client.ClientRequest
 import org.springframework.web.reactive.function.client.ExchangeFilterFunction
 import org.springframework.web.reactive.function.client.WebClient
 import org.springframework.web.util.UriComponentsBuilder
 import reactor.core.publisher.Mono
 import reactor.core.publisher.toMono
-import java.security.Principal
 
 @Controller
 @RequestMapping("/todo")
@@ -39,11 +46,13 @@ class TodoController(private val todoService: TodoService) {
             }
 
     @GetMapping("")
-    fun getTodos(@AuthenticationPrincipal oauth2User: Mono<OAuth2User>,
-                 @RegisteredOAuth2AuthorizedClient authorizedClient: OAuth2AuthorizedClient,
-                 principal: Principal,
-                 model: Model)
-            = oauth2User
+    fun getTodos(
+        @AuthenticationPrincipal oauth2User: Mono<OAuth2User>,
+        @RegisteredOAuth2AuthorizedClient authorizedClient: OAuth2AuthorizedClient,
+        principal: Principal,
+        model: Model
+    ) =
+            oauth2User
             .flatMap {
                 println(">>> oauth2User.attributes ${it.attributes}")
                 println(">>> oauth2User.authorities ${it.authorities}")

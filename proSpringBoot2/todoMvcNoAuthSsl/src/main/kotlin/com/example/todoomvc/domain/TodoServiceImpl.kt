@@ -1,12 +1,12 @@
 package com.example.todoomvc.domain
 
 import com.example.todoomvc.persistency.TodoRepository
-import org.springframework.stereotype.Service
 import java.time.LocalDateTime
+import org.springframework.stereotype.Service
 
 @Service
 class TodoServiceImpl(private val todoRepository: TodoRepository) : TodoService {
-    override fun findById(id: String)= todoRepository.findById(id)
+    override fun findById(id: String) = todoRepository.findById(id)
 
     override fun findAll() = todoRepository.findAll()
 

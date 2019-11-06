@@ -1,6 +1,7 @@
 package com.apress.todo.client
 
 import com.apress.todo.client.model.ToDo
+import java.net.URI
 import org.springframework.core.ParameterizedTypeReference
 import org.springframework.http.HttpMethod
 import org.springframework.http.HttpStatus
@@ -8,7 +9,6 @@ import org.springframework.http.RequestEntity
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
 import org.springframework.web.client.RestTemplate
-import java.net.URI
 
 @Service
 class ToDoRestClient(private val properties: ToDoRestClientProperties) {
@@ -18,9 +18,9 @@ class ToDoRestClient(private val properties: ToDoRestClientProperties) {
         val requestEntity = RequestEntity<List<ToDo>>(HttpMethod.GET,
                 URI(properties.url + properties.basePath))
         val response = restTemplate.exchange(requestEntity,
-                object: ParameterizedTypeReference<List<ToDo>>(){})
+                object : ParameterizedTypeReference<List<ToDo>>() {})
 
-        return if(response.statusCode == HttpStatus.OK) response.body!! else listOf()
+        return if (response.statusCode == HttpStatus.OK) response.body!! else listOf()
     }
 
     fun findById(id: String) = restTemplate.getForObject(
@@ -30,9 +30,9 @@ class ToDoRestClient(private val properties: ToDoRestClientProperties) {
         val requestEntity = RequestEntity(todo, HttpMethod.POST,
                 URI(properties.url + properties.basePath))
         val response = restTemplate.exchange(requestEntity,
-                object: ParameterizedTypeReference<ToDo>(){})
+                object : ParameterizedTypeReference<ToDo>() {})
 
-        return if(response.statusCode == HttpStatus.CREATED)
+        return if (response.statusCode == HttpStatus.CREATED)
             restTemplate.getForObject(response.headers.location!!, ToDo::class.java)
         else
             null
