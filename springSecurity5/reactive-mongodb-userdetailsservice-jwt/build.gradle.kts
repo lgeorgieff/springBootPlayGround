@@ -22,6 +22,8 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
+    implementation("io.jsonwebtoken:jjwt:0.2")
+    implementation("io.jsonwebtoken:claims:0.2")
     implementation("org.springframework.boot:spring-boot-starter-data-mongodb-reactive")
     implementation("de.flapdoodle.embed:de.flapdoodle.embed.mongo")
     testImplementation("org.springframework.boot:spring-boot-starter-test") {

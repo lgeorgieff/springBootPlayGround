@@ -1,2 +1,3 @@
 - https://www.devglan.com/spring-security/spring-webflux-rest-authentication
+- https://www.devglan.com/spring-security/spring-boot-jwt-auth
 - https://www.devglan.com/spring-security/spring-security-webflux-jwt
