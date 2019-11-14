@@ -41,7 +41,7 @@ class UserController {
             else Mono.empty()
         }
 
-    @DeleteMapping("/{userid}")
+    @DeleteMapping("/{username}")
     fun deleteUser(@AuthenticationPrincipal user: Mono<AuthenticatedUser>, @PathVariable username: String) = user
         .flatMap {
             if (it.username == username) userService.deleteUser(username)
