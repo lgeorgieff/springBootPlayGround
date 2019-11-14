@@ -5,6 +5,7 @@ import com.example.reactivemongodbuserdetailsservice.model.LoginResponse
 import com.example.reactivemongodbuserdetailsservice.service.UserDetailsService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
+import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -16,6 +17,9 @@ import reactor.core.publisher.Mono
 @RequestMapping("/auth")
 class AuthController {
     @Autowired
+    private lateinit var passwordEncoder: PasswordEncoder
+
+    @Autowired
     private lateinit var userService: UserDetailsService
 
     @PostMapping("/")
@@ -23,8 +27,9 @@ class AuthController {
         .flatMap { (username: String, password: String) ->
             userService
                 .findByUsername(username)
-                // .filter { it.password == password } // TODO: implement
+                .filter { passwordEncoder.matches(password, it.password) }
         }
         .onErrorResume { Mono.error(ResponseStatusException(HttpStatus.BAD_REQUEST, it.message)) }
-        .map { LoginResponse(token = "abc...token...xyz") }
+        .map { LoginResponse(token = "...token...${it.username}...token...") } // TODO: generate JWT token
+        .switchIfEmpty(Mono.error(ResponseStatusException(HttpStatus.BAD_REQUEST, "Bad username or password")))
 }

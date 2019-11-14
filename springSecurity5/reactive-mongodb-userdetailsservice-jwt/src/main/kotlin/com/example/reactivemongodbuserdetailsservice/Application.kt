@@ -7,6 +7,7 @@ import org.springframework.boot.CommandLineRunner
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 import org.springframework.context.annotation.Bean
+import org.springframework.security.crypto.factory.PasswordEncoderFactories
 
 @SpringBootApplication
 class JwtSampleApplication {
@@ -34,6 +35,9 @@ class JwtSampleApplication {
             .then(userService.createUser(admin))
             .block()
     }
+
+    @Bean
+    fun passwordEncoder() = PasswordEncoderFactories.createDelegatingPasswordEncoder()
 }
 
 fun main(args: Array<String>) {

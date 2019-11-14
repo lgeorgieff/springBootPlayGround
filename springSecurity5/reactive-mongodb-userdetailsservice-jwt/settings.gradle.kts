@@ -1,1 +1,1 @@
-rootProject.name = "reactive-mongodb-userdetailsservice"
+rootProject.name = "reactive-mongodb-userdetailsservice-jwt"
