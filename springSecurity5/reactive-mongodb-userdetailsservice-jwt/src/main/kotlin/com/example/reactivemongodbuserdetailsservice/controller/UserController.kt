@@ -6,6 +6,7 @@ import com.example.reactivemongodbuserdetailsservice.service.UserDetailsService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.MediaType
 import org.springframework.security.core.annotation.AuthenticationPrincipal
+import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -19,11 +20,16 @@ import reactor.core.publisher.Mono
 @RequestMapping("/user")
 class UserController {
     @Autowired
+    private lateinit var passwordEncoder: PasswordEncoder
+
+    @Autowired
     private lateinit var userService: UserDetailsService
 
     @PostMapping("/users", produces = [MediaType.APPLICATION_JSON_VALUE],
         consumes = [MediaType.APPLICATION_JSON_VALUE])
-    fun createUser(@RequestBody user: Mono<User>) = user.flatMap { userService.createUser(it) }
+    fun createUser(@RequestBody user: Mono<User>) = user.flatMap {
+        userService.createUser(it.copy(password = passwordEncoder.encode(it.password)))
+    }
 
     @GetMapping("/users", produces = [MediaType.APPLICATION_JSON_VALUE])
     fun getUsers() = userService.getUsers()
