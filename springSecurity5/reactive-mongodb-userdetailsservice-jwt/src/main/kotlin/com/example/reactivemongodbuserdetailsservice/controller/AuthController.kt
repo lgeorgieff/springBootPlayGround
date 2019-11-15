@@ -1,5 +1,7 @@
 package com.example.reactivemongodbuserdetailsservice.controller
 
+import com.example.reactivemongodbuserdetailsservice.jwt.generateToken
+import com.example.reactivemongodbuserdetailsservice.model.AuthenticatedUser
 import com.example.reactivemongodbuserdetailsservice.model.LoginRequest
 import com.example.reactivemongodbuserdetailsservice.model.LoginResponse
 import com.example.reactivemongodbuserdetailsservice.service.UserDetailsService
@@ -30,6 +32,6 @@ class AuthController {
                 .filter { passwordEncoder.matches(password, it.password) }
         }
         .onErrorResume { Mono.error(ResponseStatusException(HttpStatus.BAD_REQUEST, it.message)) }
-        .map { LoginResponse(token = "...token...${it.username}...token...") } // TODO: generate JWT token
+        .map { LoginResponse(token = generateToken(it as AuthenticatedUser)) }
         .switchIfEmpty(Mono.error(ResponseStatusException(HttpStatus.BAD_REQUEST, "Bad username or password")))
 }

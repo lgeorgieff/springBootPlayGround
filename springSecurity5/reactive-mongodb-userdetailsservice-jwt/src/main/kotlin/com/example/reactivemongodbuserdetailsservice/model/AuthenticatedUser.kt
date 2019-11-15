@@ -7,7 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails
 class AuthenticatedUser(
     username: String,
     password: String,
-    authorities: Collection<out GrantedAuthority> = listOf(),
+    authorities: Collection<GrantedAuthority> = listOf(),
     val firstName: String = "",
     val lastName: String = ""
 ) : UserDetails {

@@ -30,7 +30,7 @@ fun generateToken(user: AuthenticatedUser): String {
         .setIssuer("http://sample.com")
         .setIssuedAt(Date(System.currentTimeMillis()))
         .setExpiration(Date(System.currentTimeMillis() + ACCESS_TOKEN_VALIDITY_SECONDS * 1000))
-        .signWith(SignatureAlgorithm.ES256, SIGNING_KEY)
+        .signWith(SignatureAlgorithm.HS256, SIGNING_KEY)
         .compact()
 }
 
