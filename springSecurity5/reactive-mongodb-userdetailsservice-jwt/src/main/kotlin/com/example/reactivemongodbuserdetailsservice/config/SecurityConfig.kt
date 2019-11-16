@@ -25,7 +25,6 @@ class SecurityConfig {
         .pathMatchers("/api/hello/", "/auth/").permitAll()
         .pathMatchers("/api/hello/admin", "/user/users").hasRole("ADMIN")
         .anyExchange().authenticated()
-        .and().httpBasic()
         .and().formLogin().disable()
         .build()
 
