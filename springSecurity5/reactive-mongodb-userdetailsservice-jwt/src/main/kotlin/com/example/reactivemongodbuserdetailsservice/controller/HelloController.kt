@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController
 import reactor.core.publisher.Mono
 
 @RestController
-@RequestMapping("/api/")
+@RequestMapping("/api/hello")
 class HelloController {
     @GetMapping("/")
     fun getHelloRoot() = Mono.just(SimpleMessage(value = "Hello from root!"))

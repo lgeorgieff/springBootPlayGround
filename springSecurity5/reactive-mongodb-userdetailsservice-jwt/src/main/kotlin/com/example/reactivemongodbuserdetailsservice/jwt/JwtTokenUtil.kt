@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails
 
 const val ACCESS_TOKEN_VALIDITY_SECONDS = (8 * 60 * 60).toLong()
 const val SIGNING_KEY = "top_secret"
+const val AUTHORITIES_KEY = "scopes"
 
 fun getExpirationDateFromToken(token: String): Date? = getClaimFromToken(token, Claims::getExpiration)
 
@@ -23,7 +24,7 @@ fun getUsernameFromToken(token: String): String? = getClaimFromToken(token, Clai
 
 fun generateToken(user: AuthenticatedUser): String {
     val claims = Jwts.claims().setSubject(user.username)
-    claims["scopes"] = user.authorities
+    claims[AUTHORITIES_KEY] = user.authorities
 
     return Jwts.builder()
         .setClaims(claims)
@@ -37,9 +38,9 @@ fun generateToken(user: AuthenticatedUser): String {
 fun validateToken(token: String, userDetails: UserDetails) = getUsernameFromToken(token) ==
     userDetails.username && (!isTokenExpired(token))
 
-private fun isTokenExpired(token: String) = getExpirationDateFromToken(token)?.before(Date()) ?: true
+fun isTokenExpired(token: String) = getExpirationDateFromToken(token)?.before(Date()) ?: true
 
-private fun getAllClaimsFromToken(token: String) = Jwts
+fun getAllClaimsFromToken(token: String) = Jwts
     .parser()
     .setSigningKey(SIGNING_KEY)
     .parseClaimsJws(token)

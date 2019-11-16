@@ -23,19 +23,17 @@ class SecurityContextRepository : ServerSecurityContextRepository {
         throw UnsupportedOperationException("Not supported yet")
     }
 
-    override fun load(exchange: ServerWebExchange?): Mono<SecurityContext> {
-        return if (exchange != null) {
-            val authHeader = exchange.request.headers.getFirst(HttpHeaders.AUTHORIZATION)
-            if (authHeader?.startsWith(TOKEN_PREFIX) == true) {
-                authHeader.substring(TOKEN_PREFIX.length).run {
-                    authenticationManager.authenticate(UsernamePasswordAuthenticationToken(this, this))
-                        .map { SecurityContextImpl(it) as SecurityContext }
-                }
-            } else {
-                Mono.empty<SecurityContext>()
+    override fun load(exchange: ServerWebExchange?) = if (exchange != null) {
+        val authHeader = exchange.request.headers.getFirst(HttpHeaders.AUTHORIZATION)
+        if (authHeader?.startsWith(TOKEN_PREFIX) == true) {
+            authHeader.substring(TOKEN_PREFIX.length).run {
+                authenticationManager.authenticate(UsernamePasswordAuthenticationToken(this, this))
+                    .map { SecurityContextImpl(it) as SecurityContext }
             }
         } else {
             Mono.empty()
         }
+    } else {
+        Mono.empty()
     }
 }

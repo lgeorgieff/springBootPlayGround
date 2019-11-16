@@ -35,6 +35,7 @@ class UserDetailsService : ReactiveUserDetailsService {
     fun deleteUser(email: String) = userRepository
         .findByEmail(email)
         .switchIfEmpty(Mono.error(UsernameNotFoundException("""username "$email" not found""")))
+        .then(userRepository.deleteByEmail(email))
 
     fun getUsers() = userRepository.findAll()
 }
