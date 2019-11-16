@@ -5,7 +5,6 @@ import io.jsonwebtoken.Claims
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
 import java.util.Date
-import org.springframework.security.core.userdetails.UserDetails
 
 const val ACCESS_TOKEN_VALIDITY_SECONDS = (8 * 60 * 60).toLong()
 const val SIGNING_KEY = "top_secret"
@@ -35,12 +34,9 @@ fun generateToken(user: AuthenticatedUser): String {
         .compact()
 }
 
-fun validateToken(token: String, userDetails: UserDetails) = getUsernameFromToken(token) ==
-    userDetails.username && (!isTokenExpired(token))
-
 fun isTokenExpired(token: String) = getExpirationDateFromToken(token)?.before(Date()) ?: true
 
-fun getAllClaimsFromToken(token: String) = Jwts
+fun getAllClaimsFromToken(token: String): Claims = Jwts
     .parser()
     .setSigningKey(SIGNING_KEY)
     .parseClaimsJws(token)
