@@ -9,7 +9,7 @@ import reactor.core.publisher.Mono
 @RestController
 class MainController {
     @GetMapping("/")
-    fun index(@AuthenticationPrincipal oauth2User: Mono<OAuth2User>) = oauth2User
+    fun getHello(@AuthenticationPrincipal oauth2User: Mono<OAuth2User>) = oauth2User
         .map { obj: OAuth2User -> "Hello ${obj.name}" }
         .switchIfEmpty(Mono.just("Hello John Doe!"))
 }

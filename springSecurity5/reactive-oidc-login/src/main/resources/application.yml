@@ -1,0 +1,11 @@
+server:
+  port: ${PORT:8080}
+
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            clientId: ${CLIENT_ID}
+            clientSecret: ${CLIENT_SECRET}
