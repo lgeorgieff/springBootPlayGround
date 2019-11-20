@@ -1,5 +1,6 @@
 package com.example.reactiveoidcloginsinglepageapp.service
 
+import com.example.reactiveoidcloginsinglepageapp.event.ProfileCreatedEvent
 import com.example.reactiveoidcloginsinglepageapp.model.Profile
 import com.example.reactiveoidcloginsinglepageapp.repository.ProfileRepository
 import org.springframework.beans.factory.annotation.Autowired
@@ -35,7 +36,11 @@ class ProfileService {
         .findByEmail(email.toLowerCase())
         .flatMap { Mono.error<Profile>(ProfileServiceError("Profile with $email already exists")) }
         .switchIfEmpty(profileRepository.save(Profile(email = email.toLowerCase())))
-        .doOnSuccess { publisher.publishEvent(ProfileCreatedEvent(source = it)) }
+        .doOnSuccess { publisher.publishEvent(
+            ProfileCreatedEvent(
+                source = it
+            )
+        ) }
 
     class ProfileServiceError(message: String? = null, cause: Throwable? = null) : Error(message, cause)
 }

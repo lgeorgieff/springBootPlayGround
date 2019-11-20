@@ -1,4 +1,4 @@
-package com.example.reactiveoidcloginsinglepageapp.service
+package com.example.reactiveoidcloginsinglepageapp.event
 
 import com.example.reactiveoidcloginsinglepageapp.model.Profile
 import org.springframework.context.ApplicationEvent
