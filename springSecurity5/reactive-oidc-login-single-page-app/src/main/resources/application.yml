@@ -12,3 +12,6 @@ spring:
           okta:
             client-id: ${OKTA_CLIENT_ID}
             client-secret: ${OKTA_CLIENT_SECRET}
+      resourceserver:
+        jwt:
+          issuer-uri: ${OKTA_ISSUER_URI}
