@@ -3,6 +3,12 @@ server:
 
 spring:
   security:
-    user:
-      password: password
-      name: user
+    oauth2:
+      client:
+        provider:
+          okta:
+            issuer-uri: ${OKTA_ISSUER_URI}
+        registration:
+          okta:
+            client-id: ${OKTA_CLIENT_ID}
+            client-secret: ${OKTA_CLIENT_SECRET}
