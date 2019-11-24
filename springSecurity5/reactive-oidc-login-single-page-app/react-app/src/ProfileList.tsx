@@ -22,14 +22,28 @@ class ProfileList extends Component<ProfileListProps, ProfileListState> {
     };
   }
 
-  async componentDidMount() {
+  async _componentDidMount() {
     this.setState({isLoading: true});
 
     const response = await fetch('http://localhost:3000/api/', {headers: {accept: 'application/json'}});
     const data = await response.json();
-    console.log('response: ' + data)
     this.setState({profiles: data, isLoading: false});
   }
+
+  async componentDidMount() {
+      this.setState({isLoading: true});
+
+      const response = await fetch('http://localhost:3000/api/', {headers: {accept: 'application/json'}});
+      const data = await response.json();
+      this.setState({profiles: data, isLoading: false});
+
+      const socket = new WebSocket('ws://localhost:3000/ws/profiles');
+      socket.addEventListener('message', async (event: any) => {
+        const profile = JSON.parse(event.data);
+        this.state.profiles.push(profile);
+        this.setState({profiles: this.state.profiles});
+      });
+    }
 
   render() {
     const {profiles, isLoading} = this.state;
