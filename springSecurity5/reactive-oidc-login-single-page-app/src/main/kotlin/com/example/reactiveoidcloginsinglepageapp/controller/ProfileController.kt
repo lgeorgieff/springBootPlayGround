@@ -19,11 +19,10 @@ class ProfileController {
     @Autowired
     private lateinit var profileService: ProfileService
 
-    @GetMapping("/", consumes = [MediaType.APPLICATION_JSON_VALUE], produces = [MediaType.APPLICATION_JSON_VALUE])
+    @GetMapping("/", produces = [MediaType.APPLICATION_JSON_VALUE])
     fun getAllProfiles() = profileService.getAll()
 
-    @GetMapping("/{email}", consumes = [MediaType.APPLICATION_JSON_VALUE],
-        produces = [MediaType.APPLICATION_JSON_VALUE])
+    @GetMapping("/{email}", produces = [MediaType.APPLICATION_JSON_VALUE])
     fun getProfileByEmail(@PathVariable email: String) = profileService.get(email)
 
     @DeleteMapping("/{email}")

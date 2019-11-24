@@ -32,10 +32,10 @@ dependencies {
     implementation("de.flapdoodle.embed:de.flapdoodle.embed.mongo")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
 
-    implementation("org.springframework.boot:spring-boot-starter-security")
-    implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
-    implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
-    implementation("org.springframework.security:spring-security-jwt")
+    // implementation("org.springframework.boot:spring-boot-starter-security")
+    // implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
+    // implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
+    // implementation("org.springframework.security:spring-security-jwt")
 }
 
 tasks.withType<Test> {
