@@ -2,3 +2,4 @@
 - https://developer.okta.com/blog/2018/09/25/spring-webflux-websockets-react
 - https://www.baeldung.com/rest-api-spring-oauth2-angular
 - https://oidcdebugger.com/debug
+- https://stackoverflow.com/questions/43964539/google-api-not-a-valid-origin-for-the-client-url-has-not-been-whitelisted-for
