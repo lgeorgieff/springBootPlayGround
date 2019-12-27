@@ -1,6 +1,6 @@
 ### The following section is based on Spring Initializr (NetBeans)
 .gradle
-/build/
+build/
 !gradle/wrapper/gradle-wrapper.jar
 
 # STS
